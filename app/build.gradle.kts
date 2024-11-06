@@ -43,6 +43,20 @@ dependencies {
     // Android
     implementation(libs.androidx.core.ktx)
 
+    // Kotlin
+    implementation(libs.kotlinx.coroutines.android)
+    implementation(libs.kotlinx.collections.immutable)
+    implementation(libs.kotlinx.serialization.core)
+    implementation(libs.kotlinx.serialization.json)
+
+    // Networking
+    implementation(libs.retrofit)
+    implementation(libs.converter.kotlinx.serialization)
+    implementation(libs.okhttp)
+    implementation(libs.logging.interceptor)
+    implementation(libs.sandwich)
+    implementation(libs.sandwich.retrofit)
+
     // Architecture
     implementation(libs.androidx.lifecycle.runtime.ktx)
 
