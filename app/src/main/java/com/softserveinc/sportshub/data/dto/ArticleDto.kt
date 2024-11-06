@@ -6,7 +6,7 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class ArticleDto(
     @SerialName("id")
-    val id: Int,
+    val id: Long,
     @SerialName("title")
     val title: String,
     @SerialName("short_description")
@@ -14,7 +14,7 @@ data class ArticleDto(
     @SerialName("description")
     val description: String,
     @SerialName("author_id")
-    val authorId: Int,
+    val authorId: Long,
     @SerialName("created_at")
     val createdAt: String,
     @SerialName("updated_at")

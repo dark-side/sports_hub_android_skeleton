@@ -4,6 +4,7 @@ package com.softserveinc.sportshub.ui
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountCircle
@@ -34,6 +35,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.softserveinc.sportshub.R
+import com.softserveinc.sportshub.ui.home.HomeScreen
 import com.softserveinc.sportshub.ui.theme.SportsHubTheme
 import kotlinx.coroutines.launch
 
@@ -144,7 +146,11 @@ fun Main(modifier: Modifier = Modifier) {
                 )
             },
         ) { innerPadding ->
-
+            HomeScreen(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(innerPadding),
+            )
         }
     }
 }

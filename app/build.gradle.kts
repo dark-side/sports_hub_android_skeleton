@@ -20,7 +20,7 @@ android {
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
-        buildConfigField("String", "API_URL", "\"http://localhost:3002/api/\"")
+        buildConfigField("String", "API_URL", "\"http://10.0.2.2:3002/api/\"")
     }
 
     buildTypes {
@@ -50,6 +50,8 @@ dependencies {
     implementation(libs.androidx.core.ktx)
 
     // Kotlin
+    implementation(libs.kotlinx.datetime)
+    implementation(libs.kotlinx.coroutines.core)
     implementation(libs.kotlinx.coroutines.android)
     implementation(libs.kotlinx.collections.immutable)
     implementation(libs.kotlinx.serialization.core)
@@ -63,8 +65,10 @@ dependencies {
     implementation(libs.sandwich)
     implementation(libs.sandwich.retrofit)
 
-    // Architecture
+    // Lifecycle
     implementation(libs.androidx.lifecycle.runtime.ktx)
+    implementation(libs.androidx.lifecycle.viewmodel)
+    implementation(libs.androidx.lifecycle.runtime.compose)
 
     // UI
     implementation(libs.androidx.activity.compose)

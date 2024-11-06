@@ -1,4 +1,4 @@
-package com.softserveinc.sportshub.data
+package com.softserveinc.sportshub.data.api
 
 import com.skydoves.sandwich.ApiResponse
 import com.softserveinc.sportshub.data.dto.ArticleDto

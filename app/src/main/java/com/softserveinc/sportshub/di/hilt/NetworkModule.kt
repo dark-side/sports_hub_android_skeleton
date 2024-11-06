@@ -2,7 +2,7 @@ package com.softserveinc.sportshub.di.hilt
 
 import com.skydoves.sandwich.retrofit.adapters.ApiResponseCallAdapterFactory
 import com.softserveinc.sportshub.BuildConfig
-import com.softserveinc.sportshub.data.SportsHubService
+import com.softserveinc.sportshub.data.api.SportsHubService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
