@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">SportsHub</string>
+    <string name="title_home">Home</string>
+    <string name="title_team_hub">TEAM HUB</string>
+    <string name="title_lifestyle">LIFESTYLE</string>
+    <string name="title_dealbook">DEALBOOK</string>
+    <string name="title_video">VIDEO</string>
+</resources>
