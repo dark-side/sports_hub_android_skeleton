@@ -5,12 +5,15 @@ benmanesVersions = "0.51.0"
 composeBom = "2024.10.01"
 coreKtx = "1.15.0"
 espressoCore = "3.6.1"
+hilt = "2.52"
+hiltNavigationCompose = "1.2.0"
 junit = "4.13.2"
 junitVersion = "1.2.1"
 kotlin = "2.0.20"
 kotlinxCollectionsImmutable = "0.3.8"
 kotlinxCoroutines = "1.9.0"
 kotlinxSerialization = "1.7.3"
+ksp = "2.0.20-1.0.25"
 lifecycleRuntimeKtx = "2.8.7"
 okhttp = "5.0.0-alpha.14"
 retrofit = "2.11.0"
@@ -33,6 +36,9 @@ androidx-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-man
 androidx-ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling" }
 androidx-ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-tooling-preview" }
 converter-kotlinx-serialization = { module = "com.squareup.retrofit2:converter-kotlinx-serialization", version.ref = "retrofit" }
+hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "hilt" }
+hilt-compiler = { module = "com.google.dagger:hilt-compiler", version.ref = "hilt" }
+hilt-navigation-compose = { module = "androidx.hilt:hilt-navigation-compose", version.ref = "hiltNavigationCompose" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 kotlinx-collections-immutable = { module = "org.jetbrains.kotlinx:kotlinx-collections-immutable", version.ref = "kotlinxCollectionsImmutable" }
 kotlinx-coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "kotlinxCoroutines" }
@@ -47,5 +53,8 @@ sandwich-retrofit = { module = "com.github.skydoves:sandwich-retrofit", version.
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 benmanes-versions = { id = "com.github.ben-manes.versions", version.ref = "benmanesVersions" }
+hilt-android = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
+kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
+ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
