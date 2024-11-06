@@ -40,6 +40,7 @@ fun HomeScreen(
     )
 }
 
+// TODO: GenAI: Troubleshoot frequent recompositions
 @Composable
 fun HomeScreen(
     modifier: Modifier = Modifier,
