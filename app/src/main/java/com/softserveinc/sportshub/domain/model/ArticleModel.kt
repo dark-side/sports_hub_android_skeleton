@@ -1,5 +1,6 @@
 package com.softserveinc.sportshub.domain.model
 
+import kotlinx.collections.immutable.ImmutableList
 import kotlinx.datetime.Instant
 
 data class ArticleModel(
@@ -7,12 +8,11 @@ data class ArticleModel(
     val title: String,
     val shortDescription: String,
     val description: String,
-    val authorId: Long,
     val createdAt: Instant,
     val updatedAt: Instant,
     val imageUrl: String,
     val articleLikes: Int,
     val articleDislikes: Int,
-    val commentsContent: String,
+    val commentsContent: ImmutableList<String>,
     val commentsCount: Int,
 )

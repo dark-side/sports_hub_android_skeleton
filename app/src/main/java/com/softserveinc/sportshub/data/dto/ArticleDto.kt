@@ -13,8 +13,6 @@ data class ArticleDto(
     val shortDescription: String,
     @SerialName("description")
     val description: String,
-    @SerialName("author_id")
-    val authorId: Long,
     @SerialName("created_at")
     val createdAt: String,
     @SerialName("updated_at")
@@ -26,7 +24,7 @@ data class ArticleDto(
     @SerialName("article_dislikes")
     val articleDislikes: Int,
     @SerialName("comments_content")
-    val commentsContent: String,
+    val commentsContent: List<String>,
     @SerialName("comments_count")
     val commentsCount: Int,
 )

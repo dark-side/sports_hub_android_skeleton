@@ -4,7 +4,8 @@ import com.skydoves.sandwich.ApiResponse
 import com.softserveinc.sportshub.data.api.SportsHubService
 import com.softserveinc.sportshub.domain.model.ArticleModel
 import com.softserveinc.sportshub.domain.model.common.AppError
-import com.softserveinc.sportshub.domain.model.common.SimpleResult
+import com.softserveinc.sportshub.domain.model.common.ResultState
+import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.datetime.Instant
@@ -14,40 +15,39 @@ class ArticleRepositoryImpl @Inject constructor(
     private val sportsHubService: SportsHubService,
 ) : ArticleRepository {
 
-    override fun getArticles(): Flow<SimpleResult<List<ArticleModel>>> {
+    override fun getArticles(): Flow<ResultState<List<ArticleModel>>> {
         return flow {
             emit(
                 when (val response = sportsHubService.getArticles()) {
                     is ApiResponse.Success -> {
-                        SimpleResult.Success(
+                        ResultState.Success(
                             response.data.map {
                                 ArticleModel(
                                     id = it.id,
                                     title = it.title,
                                     shortDescription = it.shortDescription,
                                     description = it.description,
-                                    authorId = it.authorId,
                                     createdAt = Instant.DISTANT_PAST,
                                     updatedAt = Instant.DISTANT_PAST,
                                     imageUrl = it.imageUrl,
                                     articleLikes = it.articleLikes,
                                     articleDislikes = it.articleDislikes,
                                     commentsCount = it.commentsCount,
-                                    commentsContent = it.commentsContent,
+                                    commentsContent = it.commentsContent.toImmutableList(),
                                 )
                             }
                         )
                     }
 
                     is ApiResponse.Failure.Error -> {
-                        SimpleResult.failure(
+                        ResultState.failure(
                             // TODO: Turn payload to errorType: errorType = response.message(),
                             AppError.UnknownAppError,
                         )
                     }
 
                     is ApiResponse.Failure.Exception -> {
-                        SimpleResult.failure(
+                        ResultState.failure(
                             // TODO: Turn payload to errorType: errorType = response.message(),
                             AppError.UnknownAppError,
                         )
