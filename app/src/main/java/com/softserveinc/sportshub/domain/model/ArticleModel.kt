@@ -1,7 +1,10 @@
+@file:OptIn(ExperimentalTime::class)
+
 package com.softserveinc.sportshub.domain.model
 
 import kotlinx.collections.immutable.ImmutableList
-import kotlinx.datetime.Instant
+import kotlin.time.ExperimentalTime
+import kotlin.time.Instant
 
 data class ArticleModel(
     val id: Long,

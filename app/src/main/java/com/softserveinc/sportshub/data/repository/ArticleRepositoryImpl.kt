@@ -1,3 +1,5 @@
+@file:OptIn(ExperimentalTime::class)
+
 package com.softserveinc.sportshub.data.repository
 
 import com.skydoves.sandwich.ApiResponse
@@ -8,8 +10,9 @@ import com.softserveinc.sportshub.domain.model.common.ResultState
 import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
-import kotlinx.datetime.Instant
 import javax.inject.Inject
+import kotlin.time.ExperimentalTime
+import kotlin.time.Instant
 
 class ArticleRepositoryImpl @Inject constructor(
     private val sportsHubService: SportsHubService,
