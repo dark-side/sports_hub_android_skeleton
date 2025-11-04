@@ -1,9 +1,9 @@
 # Android Mobile GenAI Playground
 
 ### ⚙️ Environment
-- Android Studio Ladybug Feature Drop | 2024.2.2 Canary 9
+- Android Studio Narwhal 4 Feature Drop | 2025.1.4
 - VM: OpenJDK 64-Bit Server VM by JetBrains s.r.o.
-- Gradle 8.10.2 and up
+- Gradle 9.1.0 and up
 - Android Gradle Plugin 8.8.0-alpha09 and up
 
 ### 📦 Project Modules

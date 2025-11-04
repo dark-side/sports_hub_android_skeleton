@@ -81,6 +81,7 @@ dependencies {
     implementation(libs.androidx.core.splashscreen)
     implementation(libs.coil.compose)
     implementation(libs.coil.network.okhttp)
+    implementation(libs.androidx.compose.material.icons.core)
 
     // Hilt
     implementation(libs.hilt.android)
