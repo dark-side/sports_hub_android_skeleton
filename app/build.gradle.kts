@@ -64,12 +64,13 @@ dependencies {
     implementation(libs.kotlinx.serialization.json)
 
     // Networking
-    implementation(libs.retrofit)
-    implementation(libs.converter.kotlinx.serialization)
-    implementation(libs.okhttp)
-    implementation(libs.logging.interceptor)
+    implementation(libs.ktor.client.core)
+    implementation(libs.ktor.client.android)
+    implementation(libs.ktor.client.content.negotiation)
+    implementation(libs.ktor.serialization.kotlinx.json)
+    implementation(libs.ktor.client.logging)
     implementation(libs.sandwich)
-    implementation(libs.sandwich.retrofit)
+    implementation(libs.sandwich.ktor)
 
     // Lifecycle
     implementation(libs.androidx.lifecycle.runtime.ktx)
@@ -85,7 +86,7 @@ dependencies {
     implementation(libs.androidx.material3)
     implementation(libs.androidx.core.splashscreen)
     implementation(libs.coil.compose)
-    implementation(libs.coil.network.okhttp)
+    implementation(libs.coil.network.ktor)
     implementation(libs.androidx.compose.material.icons.core)
 
     // Hilt
