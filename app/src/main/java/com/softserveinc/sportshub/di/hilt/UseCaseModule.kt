@@ -2,6 +2,7 @@ package com.softserveinc.sportshub.di.hilt
 
 import com.softserveinc.sportshub.data.repository.ArticleRepository
 import com.softserveinc.sportshub.data.repository.AuthRepository
+import com.softserveinc.sportshub.domain.usecase.GetArticleUseCase
 import com.softserveinc.sportshub.domain.usecase.GetArticlesUseCase
 import com.softserveinc.sportshub.domain.usecase.GetCurrentUserUseCase
 import com.softserveinc.sportshub.domain.usecase.LoginUseCase
@@ -23,6 +24,16 @@ object UseCaseModule {
         articleRepository: ArticleRepository,
     ): GetArticlesUseCase {
         return GetArticlesUseCase(
+            articleRepository = articleRepository,
+        )
+    }
+
+    @Singleton
+    @Provides
+    fun provideGetArticleUseCase(
+        articleRepository: ArticleRepository,
+    ): GetArticleUseCase {
+        return GetArticleUseCase(
             articleRepository = articleRepository,
         )
     }

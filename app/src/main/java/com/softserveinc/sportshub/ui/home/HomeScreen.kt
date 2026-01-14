@@ -1,5 +1,6 @@
 package com.softserveinc.sportshub.ui.home
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -36,12 +37,14 @@ fun HomeScreenPreview() {
 fun HomeScreen(
     modifier: Modifier = Modifier,
     viewModel: HomeViewModel = hiltViewModel(),
+    onArticleClick: (Long) -> Unit = {},
 ) {
     val uiState by viewModel.uiStateFlow.collectAsState()
 
     HomeScreen(
         modifier = modifier,
         uiState = uiState,
+        onArticleClick = onArticleClick,
     )
 }
 
@@ -50,6 +53,7 @@ fun HomeScreen(
 fun HomeScreen(
     modifier: Modifier = Modifier,
     uiState: HomeViewModel.UiState,
+    onArticleClick: (Long) -> Unit = {},
 ) {
     val articles = uiState.articles.value
 
@@ -59,10 +63,11 @@ fun HomeScreen(
         verticalArrangement = Arrangement.spacedBy(16.dp),
     ) {
         if (articles != null) {
-            items(articles) {
+            items(articles) { article ->
                 Article(
                     modifier = Modifier.fillMaxWidth(),
-                    articleModel = it,
+                    articleModel = article,
+                    onClick = { onArticleClick(article.id) },
                 )
             }
         }
@@ -73,9 +78,10 @@ fun HomeScreen(
 fun Article(
     modifier: Modifier = Modifier,
     articleModel: ArticleModel,
+    onClick: () -> Unit = {},
 ) {
     Column(
-        modifier = modifier,
+        modifier = modifier.clickable(onClick = onClick),
         verticalArrangement = Arrangement.spacedBy(8.dp),
     ) {
         AsyncImage(

@@ -41,6 +41,7 @@ import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.navigation3.runtime.NavEntry
 import androidx.navigation3.ui.NavDisplay
 import com.softserveinc.sportshub.R
+import com.softserveinc.sportshub.ui.article.ArticleDetailScreen
 import com.softserveinc.sportshub.ui.auth.LoginScreen
 import com.softserveinc.sportshub.ui.auth.SignUpScreen
 import com.softserveinc.sportshub.ui.home.HomeScreen
@@ -79,6 +80,7 @@ fun Main(
                         onSignUpClick = { backStack.add(NavKey.SignUp) },
                         onLoginClick = { backStack.add(NavKey.Login) },
                         onLogoutClick = { viewModel.logout() },
+                        onArticleClick = { articleId -> backStack.add(NavKey.ArticleDetail(articleId)) },
                     )
                 }
 
@@ -114,6 +116,14 @@ fun Main(
                         },
                     )
                 }
+
+                is NavKey.ArticleDetail -> NavEntry(key) {
+                    ArticleDetailScreen(
+                        articleId = key.articleId,
+                        modifier = Modifier.fillMaxSize(),
+                        onBack = { backStack.removeLastOrNull() },
+                    )
+                }
             }
         },
     )
@@ -128,6 +138,7 @@ fun MainContent(
     onSignUpClick: () -> Unit,
     onLoginClick: () -> Unit,
     onLogoutClick: () -> Unit,
+    onArticleClick: (Long) -> Unit,
 ) {
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val scope = rememberCoroutineScope()
@@ -265,6 +276,7 @@ fun MainContent(
                 modifier = Modifier
                     .fillMaxSize()
                     .padding(innerPadding),
+                onArticleClick = onArticleClick,
             )
         }
     }

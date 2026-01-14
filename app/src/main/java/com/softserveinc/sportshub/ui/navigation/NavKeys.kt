@@ -13,4 +13,7 @@ sealed interface NavKey {
 
     /** Sign up screen */
     data object SignUp : NavKey
+
+    /** Article detail screen */
+    data class ArticleDetail(val articleId: Long) : NavKey
 }

@@ -45,4 +45,31 @@ class ArticleRepositoryImpl @Inject constructor(
             )
         }
     }
+
+    override fun getArticleById(id: Long): Flow<ResultState<ArticleModel>> {
+        return flow {
+            emit(
+                try {
+                    val article = sportsHubService.getArticle(id)
+                    ResultState.Success(
+                        ArticleModel(
+                            id = article.id,
+                            title = article.title,
+                            shortDescription = article.shortDescription,
+                            description = article.description,
+                            createdAt = Instant.DISTANT_PAST,
+                            updatedAt = Instant.DISTANT_PAST,
+                            imageUrl = article.imageUrl,
+                            articleLikes = article.articleLikes,
+                            articleDislikes = article.articleDislikes,
+                            commentsCount = article.commentsCount,
+                            commentsContent = article.commentsContent.toImmutableList(),
+                        )
+                    )
+                } catch (e: Exception) {
+                    ResultState.failure(AppError.UnknownAppError)
+                }
+            )
+        }
+    }
 }
