@@ -3,7 +3,7 @@
 package com.softserveinc.sportshub.ui
 
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
@@ -14,6 +14,7 @@ import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -25,7 +26,9 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -34,8 +37,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
+import androidx.navigation3.runtime.NavEntry
+import androidx.navigation3.ui.NavDisplay
 import com.softserveinc.sportshub.R
+import com.softserveinc.sportshub.ui.auth.LoginScreen
+import com.softserveinc.sportshub.ui.auth.SignUpScreen
 import com.softserveinc.sportshub.ui.home.HomeScreen
+import com.softserveinc.sportshub.ui.navigation.NavKey
 import com.softserveinc.sportshub.ui.theme.SportsHubTheme
 import kotlinx.coroutines.launch
 
@@ -48,12 +57,81 @@ fun MainPreview() {
 }
 
 @Composable
-fun Main(modifier: Modifier = Modifier) {
+fun Main(
+    modifier: Modifier = Modifier,
+    viewModel: MainViewModel = hiltViewModel(),
+) {
+    val currentUser by viewModel.currentUser.collectAsState()
+    val backStack = remember { mutableStateListOf<NavKey>(NavKey.Home) }
+
+    NavDisplay(
+        backStack = backStack,
+        modifier = modifier.fillMaxSize(),
+        onBack = { backStack.removeLastOrNull() },
+        entryProvider = { key ->
+            when (key) {
+                NavKey.Home -> NavEntry(key) {
+                    MainContent(
+                        modifier = Modifier.fillMaxSize(),
+                        userName = currentUser?.displayName,
+                        userEmail = currentUser?.email,
+                        isLoggedIn = currentUser != null,
+                        onSignUpClick = { backStack.add(NavKey.SignUp) },
+                        onLoginClick = { backStack.add(NavKey.Login) },
+                        onLogoutClick = { viewModel.logout() },
+                    )
+                }
+
+                NavKey.Login -> NavEntry(key) {
+                    LoginScreen(
+                        modifier = Modifier.fillMaxSize(),
+                        onClose = { backStack.removeLastOrNull() },
+                        onLoginSuccess = {
+                            // Pop back to home
+                            while (backStack.size > 1) {
+                                backStack.removeLastOrNull()
+                            }
+                        },
+                        onNavigateToSignUp = {
+                            backStack.removeLastOrNull()
+                            backStack.add(NavKey.SignUp)
+                        },
+                    )
+                }
+
+                NavKey.SignUp -> NavEntry(key) {
+                    SignUpScreen(
+                        modifier = Modifier.fillMaxSize(),
+                        onClose = { backStack.removeLastOrNull() },
+                        onSignUpSuccess = {
+                            // Go to login after signup
+                            backStack.removeLastOrNull()
+                            backStack.add(NavKey.Login)
+                        },
+                        onNavigateToLogin = {
+                            backStack.removeLastOrNull()
+                            backStack.add(NavKey.Login)
+                        },
+                    )
+                }
+            }
+        },
+    )
+}
+
+@Composable
+fun MainContent(
+    modifier: Modifier = Modifier,
+    userName: String?,
+    userEmail: String?,
+    isLoggedIn: Boolean,
+    onSignUpClick: () -> Unit,
+    onLoginClick: () -> Unit,
+    onLogoutClick: () -> Unit,
+) {
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val scope = rememberCoroutineScope()
-    var showAccountDropdown by remember {
-        mutableStateOf(false)
-    }
+    var showAccountDropdown by remember { mutableStateOf(false) }
 
     ModalNavigationDrawer(
         drawerState = drawerState,
@@ -100,37 +178,74 @@ fun Main(modifier: Modifier = Modifier) {
                         )
                     },
                     actions = {
-                        Box {
-                            IconButton(
-                                onClick = {
-                                    showAccountDropdown = true
-                                },
-                            ) {
-                                Icon(
-                                    imageVector = Icons.Default.AccountCircle,
-                                    contentDescription = null,
-                                )
-                            }
-                            DropdownMenu(
-                                expanded = showAccountDropdown,
-                                onDismissRequest = {
-                                    showAccountDropdown = false
-                                },
-                            ) {
+                        IconButton(
+                            onClick = {
+                                showAccountDropdown = true
+                            },
+                        ) {
+                            Icon(
+                                imageVector = Icons.Default.AccountCircle,
+                                contentDescription = null,
+                            )
+                        }
+                        DropdownMenu(
+                            expanded = showAccountDropdown,
+                            onDismissRequest = {
+                                showAccountDropdown = false
+                            },
+                        ) {
+                            if (isLoggedIn && userName != null && userEmail != null) {
+                                Column(
+                                    modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
+                                ) {
+                                    Text(
+                                        text = userName,
+                                        style = MaterialTheme.typography.titleMedium,
+                                    )
+                                    Text(
+                                        text = userEmail,
+                                        style = MaterialTheme.typography.bodySmall,
+                                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                                    )
+                                }
+                                HorizontalDivider()
                                 DropdownMenuItem(
-                                    text = {
-                                        Text(text = "Sign up")
-                                    },
+                                    text = { Text(text = "Personal") },
+                                    onClick = { showAccountDropdown = false },
+                                )
+                                DropdownMenuItem(
+                                    text = { Text(text = "Change password") },
+                                    onClick = { showAccountDropdown = false },
+                                )
+                                DropdownMenuItem(
+                                    text = { Text(text = "My surveys") },
+                                    onClick = { showAccountDropdown = false },
+                                )
+                                DropdownMenuItem(
+                                    text = { Text(text = "Team hub") },
+                                    onClick = { showAccountDropdown = false },
+                                )
+                                HorizontalDivider()
+                                DropdownMenuItem(
+                                    text = { Text(text = "Log out") },
                                     onClick = {
                                         showAccountDropdown = false
+                                        onLogoutClick()
+                                    },
+                                )
+                            } else {
+                                DropdownMenuItem(
+                                    text = { Text(text = "Sign up") },
+                                    onClick = {
+                                        showAccountDropdown = false
+                                        onSignUpClick()
                                     },
                                 )
                                 DropdownMenuItem(
-                                    text = {
-                                        Text(text = "Log in")
-                                    },
+                                    text = { Text(text = "Log in") },
                                     onClick = {
                                         showAccountDropdown = false
+                                        onLoginClick()
                                     },
                                 )
                             }

@@ -1,22 +1,22 @@
 package com.softserveinc.sportshub.data.api
 
-import com.skydoves.sandwich.ApiResponse
 import com.softserveinc.sportshub.data.dto.ArticleDto
-import io.ktor.client.HttpClient
-import io.ktor.client.call.body
-import io.ktor.client.request.get
-import javax.inject.Inject
+import com.softserveinc.sportshub.data.dto.LoginRequestWrapper
+import com.softserveinc.sportshub.data.dto.LoginResponse
+import com.softserveinc.sportshub.data.dto.SignUpRequestWrapper
+import com.softserveinc.sportshub.data.dto.SignUpResponse
+import de.jensklingenberg.ktorfit.http.Body
+import de.jensklingenberg.ktorfit.http.GET
+import de.jensklingenberg.ktorfit.http.POST
 
-class SportsHubService @Inject constructor(
-    private val httpClient: HttpClient
-) {
+interface SportsHubService {
 
-    suspend fun getArticles(): ApiResponse<List<ArticleDto>> {
-        return try {
-            val response = httpClient.get("articles")
-            ApiResponse.Success(response.body())
-        } catch (e: Exception) {
-            ApiResponse.error(e)
-        }
-    }
+    @GET("articles")
+    suspend fun getArticles(): List<ArticleDto>
+
+    @POST("auth/sign_in")
+    suspend fun login(@Body request: LoginRequestWrapper): LoginResponse
+
+    @POST("../users")
+    suspend fun signUp(@Body request: SignUpRequestWrapper): SignUpResponse
 }

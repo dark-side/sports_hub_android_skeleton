@@ -4,7 +4,7 @@ import android.app.Application
 import android.content.Context
 import coil3.ImageLoader
 import coil3.SingletonImageLoader
-import coil3.network.ktor.KtorNetworkFetcherFactory
+import coil3.network.ktor3.KtorNetworkFetcherFactory
 import coil3.util.DebugLogger
 import dagger.hilt.android.HiltAndroidApp
 import io.ktor.client.HttpClient
@@ -19,9 +19,11 @@ class SportsHubApplication : Application(), SingletonImageLoader.Factory {
     override fun newImageLoader(context: Context): ImageLoader {
         return ImageLoader.Builder(context)
             .components {
-                add(KtorNetworkFetcherFactory(
-                    httpClient = { httpClient }
-                ))
+                add(
+                    KtorNetworkFetcherFactory(
+                        httpClient = { httpClient }
+                    )
+                )
             }
             .logger(DebugLogger())
             .build()
