@@ -11,7 +11,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
@@ -34,7 +33,9 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
+import com.softserveinc.sportshub.R
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
@@ -87,12 +88,12 @@ fun SignUpScreen(
         modifier = modifier,
         topBar = {
             CenterAlignedTopAppBar(
-                title = { Text(text = "Sports Hub") },
+                title = { Text(text = stringResource(R.string.app_name)) },
                 navigationIcon = {
                     IconButton(onClick = onClose) {
                         Icon(
                             imageVector = Icons.Default.Close,
-                            contentDescription = "Close",
+                            contentDescription = stringResource(R.string.action_close),
                         )
                     }
                 },
@@ -114,14 +115,14 @@ fun SignUpScreen(
             Spacer(modifier = Modifier.height(48.dp))
 
             Text(
-                text = "Create Account",
+                text = stringResource(R.string.signup_title),
                 style = MaterialTheme.typography.headlineSmall,
             )
 
             Spacer(modifier = Modifier.height(8.dp))
 
             Text(
-                text = "Or use your email for registration",
+                text = stringResource(R.string.signup_subtitle),
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
@@ -136,8 +137,8 @@ fun SignUpScreen(
                     value = uiState.firstName,
                     onValueChange = onFirstNameChange,
                     modifier = Modifier.weight(1f),
-                    label = { Text("FIRST NAME") },
-                    placeholder = { Text("John") },
+                    label = { Text(stringResource(R.string.signup_label_first_name)) },
+                    placeholder = { Text(stringResource(R.string.signup_placeholder_first_name)) },
                     singleLine = true,
                     keyboardOptions = KeyboardOptions(
                         imeAction = ImeAction.Next,
@@ -148,8 +149,8 @@ fun SignUpScreen(
                     value = uiState.lastName,
                     onValueChange = onLastNameChange,
                     modifier = Modifier.weight(1f),
-                    label = { Text("LAST NAME") },
-                    placeholder = { Text("Doe") },
+                    label = { Text(stringResource(R.string.signup_label_last_name)) },
+                    placeholder = { Text(stringResource(R.string.signup_placeholder_last_name)) },
                     singleLine = true,
                     keyboardOptions = KeyboardOptions(
                         imeAction = ImeAction.Next,
@@ -163,8 +164,8 @@ fun SignUpScreen(
                 value = uiState.email,
                 onValueChange = onEmailChange,
                 modifier = Modifier.fillMaxWidth(),
-                label = { Text("EMAIL") },
-                placeholder = { Text("johndoe@gmail.com") },
+                label = { Text(stringResource(R.string.signup_label_email)) },
+                placeholder = { Text(stringResource(R.string.signup_placeholder_email)) },
                 singleLine = true,
                 keyboardOptions = KeyboardOptions(
                     keyboardType = KeyboardType.Email,
@@ -178,8 +179,8 @@ fun SignUpScreen(
                 value = uiState.password,
                 onValueChange = onPasswordChange,
                 modifier = Modifier.fillMaxWidth(),
-                label = { Text("PASSWORD") },
-                placeholder = { Text("8 + characters (letters and numbers)") },
+                label = { Text(stringResource(R.string.signup_label_password)) },
+                placeholder = { Text(stringResource(R.string.signup_placeholder_password)) },
                 singleLine = true,
                 visualTransformation = PasswordVisualTransformation(),
                 keyboardOptions = KeyboardOptions(
@@ -215,14 +216,14 @@ fun SignUpScreen(
                         modifier = Modifier.size(18.dp),
                     )
                 } else {
-                    Text(text = "SIGN UP")
+                    Text(text = stringResource(R.string.signup_button))
                 }
             }
 
             Spacer(modifier = Modifier.weight(1f))
 
             TextButton(onClick = onNavigateToLogin) {
-                Text(text = "Back to Log in")
+                Text(text = stringResource(R.string.signup_back_to_login))
             }
 
             Spacer(modifier = Modifier.height(16.dp))

@@ -63,12 +63,13 @@ class LoginViewModel @Inject constructor(
         val loginResult: UiStateWrapper<UserModel> = UiStateWrapper(),
     ) {
         val isLoading: Boolean get() = loginResult.isLoading
-        val error: String? get() = loginResult.errors.firstOrNull()?.toUiString()?.let {
-            when (it) {
-                is com.softserveinc.sportshub.domain.model.common.UiString.RawUiString -> it.value
-                else -> null
+        val error: String?
+            get() = loginResult.errors.firstOrNull()?.toUiString()?.let {
+                when (it) {
+                    is com.softserveinc.sportshub.domain.model.common.UiString.RawUiString -> it.value
+                    else -> null
+                }
             }
-        }
     }
 
     sealed interface Event {

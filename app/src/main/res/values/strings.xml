@@ -1,8 +1,53 @@
 <resources>
-    <string name="app_name">SportsHub</string>
-    <string name="title_home">Home</string>
-    <string name="title_team_hub">TEAM HUB</string>
-    <string name="title_lifestyle">LIFESTYLE</string>
-    <string name="title_dealbook">DEALBOOK</string>
-    <string name="title_video">VIDEO</string>
+    <string name="app_name">Sports Hub</string>
+
+    <!-- Common -->
+    <string name="action_close">Close</string>
+    <string name="action_back">Back</string>
+
+    <!-- Navigation Drawer -->
+    <string name="nav_drawer_home">Home</string>
+    <string name="nav_drawer_team_hub">TEAM HUB</string>
+    <string name="nav_drawer_lifestyle">LIFESTYLE</string>
+    <string name="nav_drawer_dealbook">DEALBOOK</string>
+    <string name="nav_drawer_video">VIDEO</string>
+
+    <!-- Account Menu -->
+    <string name="menu_personal">Personal</string>
+    <string name="menu_change_password">Change password</string>
+    <string name="menu_my_surveys">My surveys</string>
+    <string name="menu_team_hub">Team hub</string>
+    <string name="menu_log_out">Log out</string>
+    <string name="menu_sign_up">Sign up</string>
+    <string name="menu_log_in">Log in</string>
+
+    <!-- Login Screen -->
+    <string name="login_title">Log in to Sports Hub</string>
+    <string name="login_label_email">EMAIL ADDRESS</string>
+    <string name="login_placeholder_email">Email@gmail.com</string>
+    <string name="login_label_password">PASSWORD</string>
+    <string name="login_placeholder_password">Enter your password</string>
+    <string name="login_button">LOG IN</string>
+    <string name="login_no_account">Don\'t have an account?</string>
+
+    <!-- Sign Up Screen -->
+    <string name="signup_title">Create Account</string>
+    <string name="signup_subtitle">Or use your email for registration</string>
+    <string name="signup_label_first_name">FIRST NAME</string>
+    <string name="signup_placeholder_first_name">John</string>
+    <string name="signup_label_last_name">LAST NAME</string>
+    <string name="signup_placeholder_last_name">Doe</string>
+    <string name="signup_label_email">EMAIL</string>
+    <string name="signup_placeholder_email">johndoe@gmail.com</string>
+    <string name="signup_label_password">PASSWORD</string>
+    <string name="signup_placeholder_password">8 + characters (letters and numbers)</string>
+    <string name="signup_button">SIGN UP</string>
+    <string name="signup_back_to_login">Back to Log in</string>
+
+    <!-- Article Detail Screen -->
+    <string name="article_detail_title">Article</string>
+    <string name="article_detail_error">Failed to load article</string>
+    <string name="article_detail_likes">Likes</string>
+    <string name="article_detail_dislikes">Dislikes</string>
+    <string name="article_detail_comments">Comments (%1$d)</string>
 </resources>

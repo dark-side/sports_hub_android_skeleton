@@ -31,7 +31,9 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
+import com.softserveinc.sportshub.R
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
@@ -80,12 +82,12 @@ fun LoginScreen(
         modifier = modifier,
         topBar = {
             CenterAlignedTopAppBar(
-                title = { Text(text = "Sports Hub") },
+                title = { Text(text = stringResource(R.string.app_name)) },
                 navigationIcon = {
                     IconButton(onClick = onClose) {
                         Icon(
                             imageVector = Icons.Default.Close,
-                            contentDescription = "Close",
+                            contentDescription = stringResource(R.string.action_close),
                         )
                     }
                 },
@@ -107,7 +109,7 @@ fun LoginScreen(
             Spacer(modifier = Modifier.height(48.dp))
 
             Text(
-                text = "Log in to Sports Hub",
+                text = stringResource(R.string.login_title),
                 style = MaterialTheme.typography.headlineSmall,
             )
 
@@ -117,8 +119,8 @@ fun LoginScreen(
                 value = uiState.email,
                 onValueChange = onEmailChange,
                 modifier = Modifier.fillMaxWidth(),
-                label = { Text("EMAIL ADDRESS") },
-                placeholder = { Text("Email@gmail.com") },
+                label = { Text(stringResource(R.string.login_label_email)) },
+                placeholder = { Text(stringResource(R.string.login_placeholder_email)) },
                 singleLine = true,
                 keyboardOptions = KeyboardOptions(
                     keyboardType = KeyboardType.Email,
@@ -132,8 +134,8 @@ fun LoginScreen(
                 value = uiState.password,
                 onValueChange = onPasswordChange,
                 modifier = Modifier.fillMaxWidth(),
-                label = { Text("PASSWORD") },
-                placeholder = { Text("Enter your password") },
+                label = { Text(stringResource(R.string.login_label_password)) },
+                placeholder = { Text(stringResource(R.string.login_placeholder_password)) },
                 singleLine = true,
                 visualTransformation = PasswordVisualTransformation(),
                 keyboardOptions = KeyboardOptions(
@@ -169,14 +171,14 @@ fun LoginScreen(
                         modifier = Modifier.size(18.dp),
                     )
                 } else {
-                    Text(text = "LOG IN")
+                    Text(text = stringResource(R.string.login_button))
                 }
             }
 
             Spacer(modifier = Modifier.weight(1f))
 
             TextButton(onClick = onNavigateToSignUp) {
-                Text(text = "Don't have an account?")
+                Text(text = stringResource(R.string.login_no_account))
             }
 
             Spacer(modifier = Modifier.height(16.dp))

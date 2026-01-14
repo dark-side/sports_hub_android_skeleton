@@ -173,7 +173,7 @@ fun MainContent(
             topBar = {
                 CenterAlignedTopAppBar(
                     title = {
-                        Text(text = "Sports Hub")
+                        Text(text = stringResource(R.string.app_name))
                     },
                     navigationIcon = {
                         Icon(
@@ -207,7 +207,10 @@ fun MainContent(
                         ) {
                             if (isLoggedIn && userName != null && userEmail != null) {
                                 Column(
-                                    modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
+                                    modifier = Modifier.padding(
+                                        horizontal = 16.dp,
+                                        vertical = 8.dp
+                                    ),
                                 ) {
                                     Text(
                                         text = userName,
@@ -221,24 +224,24 @@ fun MainContent(
                                 }
                                 HorizontalDivider()
                                 DropdownMenuItem(
-                                    text = { Text(text = "Personal") },
+                                    text = { Text(text = stringResource(R.string.menu_personal)) },
                                     onClick = { showAccountDropdown = false },
                                 )
                                 DropdownMenuItem(
-                                    text = { Text(text = "Change password") },
+                                    text = { Text(text = stringResource(R.string.menu_change_password)) },
                                     onClick = { showAccountDropdown = false },
                                 )
                                 DropdownMenuItem(
-                                    text = { Text(text = "My surveys") },
+                                    text = { Text(text = stringResource(R.string.menu_my_surveys)) },
                                     onClick = { showAccountDropdown = false },
                                 )
                                 DropdownMenuItem(
-                                    text = { Text(text = "Team hub") },
+                                    text = { Text(text = stringResource(R.string.menu_team_hub)) },
                                     onClick = { showAccountDropdown = false },
                                 )
                                 HorizontalDivider()
                                 DropdownMenuItem(
-                                    text = { Text(text = "Log out") },
+                                    text = { Text(text = stringResource(R.string.menu_log_out)) },
                                     onClick = {
                                         showAccountDropdown = false
                                         onLogoutClick()
@@ -246,14 +249,14 @@ fun MainContent(
                                 )
                             } else {
                                 DropdownMenuItem(
-                                    text = { Text(text = "Sign up") },
+                                    text = { Text(text = stringResource(R.string.menu_sign_up)) },
                                     onClick = {
                                         showAccountDropdown = false
                                         onSignUpClick()
                                     },
                                 )
                                 DropdownMenuItem(
-                                    text = { Text(text = "Log in") },
+                                    text = { Text(text = stringResource(R.string.menu_log_in)) },
                                     onClick = {
                                         showAccountDropdown = false
                                         onLoginClick()
@@ -285,9 +288,9 @@ fun MainContent(
 enum class DrawerEntry(
     val titleResId: Int,
 ) {
-    HOME(R.string.title_home),
-    TEAM_HUB(R.string.title_team_hub),
-    LIFESTYLE(R.string.title_lifestyle),
-    DEALBOOK(R.string.title_dealbook),
-    VIDEO(R.string.title_video),
+    HOME(R.string.nav_drawer_home),
+    TEAM_HUB(R.string.nav_drawer_team_hub),
+    LIFESTYLE(R.string.nav_drawer_lifestyle),
+    DEALBOOK(R.string.nav_drawer_dealbook),
+    VIDEO(R.string.nav_drawer_video),
 }

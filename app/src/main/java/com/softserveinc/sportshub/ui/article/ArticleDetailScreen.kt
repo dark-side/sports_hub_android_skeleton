@@ -34,7 +34,9 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.softserveinc.sportshub.R
 import androidx.core.net.toUri
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import coil3.compose.AsyncImage
@@ -75,12 +77,12 @@ fun ArticleDetailScreen(
         modifier = modifier,
         topBar = {
             TopAppBar(
-                title = { Text(text = "Article") },
+                title = { Text(text = stringResource(R.string.article_detail_title)) },
                 navigationIcon = {
                     IconButton(onClick = onBack) {
                         Icon(
                             imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                            contentDescription = "Back",
+                            contentDescription = stringResource(R.string.action_back),
                         )
                     }
                 },
@@ -106,7 +108,7 @@ fun ArticleDetailScreen(
 
                 uiState.article.errors.isNotEmpty() -> {
                     Text(
-                        text = "Failed to load article",
+                        text = stringResource(R.string.article_detail_error),
                         modifier = Modifier
                             .align(Alignment.Center)
                             .padding(16.dp),
@@ -178,7 +180,7 @@ fun ArticleDetailContent(
                 ) {
                     Icon(
                         imageVector = Icons.Default.Favorite,
-                        contentDescription = "Likes",
+                        contentDescription = stringResource(R.string.article_detail_likes),
                         tint = MaterialTheme.colorScheme.primary,
                     )
                     Text(
@@ -192,7 +194,7 @@ fun ArticleDetailContent(
                 ) {
                     Icon(
                         imageVector = Icons.Default.FavoriteBorder,
-                        contentDescription = "Dislikes",
+                        contentDescription = stringResource(R.string.article_detail_dislikes),
                         tint = MaterialTheme.colorScheme.error,
                     )
                     Text(
@@ -209,7 +211,7 @@ fun ArticleDetailContent(
 
             if (article.commentsContent.isNotEmpty()) {
                 Text(
-                    text = "Comments (${article.commentsCount})",
+                    text = stringResource(R.string.article_detail_comments, article.commentsCount),
                     style = MaterialTheme.typography.titleMedium,
                 )
                 Column(
