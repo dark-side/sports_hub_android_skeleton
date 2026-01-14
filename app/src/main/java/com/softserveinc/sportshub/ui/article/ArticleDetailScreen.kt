@@ -1,4 +1,4 @@
-@file:OptIn(ExperimentalMaterial3Api::class)
+@file:OptIn(ExperimentalMaterial3Api::class, ExperimentalTime::class)
 
 package com.softserveinc.sportshub.ui.article
 
@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -17,6 +16,8 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.FavoriteBorder
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -29,6 +30,7 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
@@ -37,12 +39,17 @@ import androidx.core.net.toUri
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import coil3.compose.AsyncImage
 import com.softserveinc.sportshub.domain.model.ArticleModel
+import kotlinx.datetime.Instant
+import kotlinx.datetime.TimeZone
+import kotlinx.datetime.toLocalDateTime
+import kotlin.time.ExperimentalTime
 
 @Composable
 fun ArticleDetailScreen(
     articleId: Long,
     modifier: Modifier = Modifier,
     viewModel: ArticleDetailViewModel = hiltViewModel<ArticleDetailViewModel, ArticleDetailViewModel.Factory>(
+        key = "article_$articleId",
         creationCallback = { factory -> factory.create(articleId) }
     ),
     onBack: () -> Unit,
@@ -96,6 +103,7 @@ fun ArticleDetailScreen(
                         modifier = Modifier.align(Alignment.Center),
                     )
                 }
+
                 uiState.article.errors.isNotEmpty() -> {
                     Text(
                         text = "Failed to load article",
@@ -105,6 +113,7 @@ fun ArticleDetailScreen(
                         color = MaterialTheme.colorScheme.error,
                     )
                 }
+
                 article != null -> {
                     ArticleDetailContent(
                         modifier = Modifier.fillMaxSize(),
@@ -121,6 +130,10 @@ fun ArticleDetailContent(
     modifier: Modifier = Modifier,
     article: ArticleModel,
 ) {
+    val formattedDate = remember(article.createdAt) {
+        formatPublishedDate(article.createdAt)
+    }
+
     Column(
         modifier = modifier.verticalScroll(rememberScrollState()),
     ) {
@@ -142,11 +155,17 @@ fun ArticleDetailContent(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(16.dp),
-            verticalArrangement = Arrangement.spacedBy(16.dp),
+            verticalArrangement = Arrangement.spacedBy(8.dp),
         ) {
             Text(
                 text = article.title,
                 style = MaterialTheme.typography.headlineSmall,
+            )
+
+            Text(
+                text = formattedDate,
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
 
             Row(
@@ -181,11 +200,6 @@ fun ArticleDetailContent(
                         style = MaterialTheme.typography.bodyMedium,
                     )
                 }
-                Text(
-                    text = "${article.commentsCount} comments",
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                )
             }
 
             Text(
@@ -194,21 +208,35 @@ fun ArticleDetailContent(
             )
 
             if (article.commentsContent.isNotEmpty()) {
-                Spacer(modifier = Modifier.height(8.dp))
                 Text(
-                    text = "Comments",
+                    text = "Comments (${article.commentsCount})",
                     style = MaterialTheme.typography.titleMedium,
                 )
-                article.commentsContent.forEach { comment ->
-                    Text(
-                        text = comment,
-                        style = MaterialTheme.typography.bodyMedium,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(vertical = 4.dp),
-                    )
+                Column(
+                    verticalArrangement = Arrangement.spacedBy(8.dp),
+                ) {
+                    article.commentsContent.forEach { comment ->
+                        Card(
+                            modifier = Modifier.fillMaxWidth(),
+                            colors = CardDefaults.cardColors(
+                                containerColor = MaterialTheme.colorScheme.surfaceVariant,
+                            ),
+                        ) {
+                            Text(
+                                text = comment,
+                                style = MaterialTheme.typography.bodyMedium,
+                                modifier = Modifier.padding(12.dp),
+                            )
+                        }
+                    }
                 }
             }
         }
     }
+}
+
+private fun formatPublishedDate(instant: Instant): String {
+    val localDateTime = instant.toLocalDateTime(TimeZone.currentSystemDefault())
+    val month = localDateTime.month.name.lowercase().replaceFirstChar { it.uppercase() }
+    return "$month ${localDateTime.day}, ${localDateTime.year}"
 }

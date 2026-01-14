@@ -3,6 +3,7 @@
 package com.softserveinc.sportshub.data.repository
 
 import com.softserveinc.sportshub.data.api.SportsHubService
+import com.softserveinc.sportshub.data.dto.ArticleDto
 import com.softserveinc.sportshub.domain.model.ArticleModel
 import com.softserveinc.sportshub.domain.model.common.AppError
 import com.softserveinc.sportshub.domain.model.common.ResultState
@@ -22,23 +23,7 @@ class ArticleRepositoryImpl @Inject constructor(
             emit(
                 try {
                     val articles = sportsHubService.getArticles()
-                    ResultState.Success(
-                        articles.map {
-                            ArticleModel(
-                                id = it.id,
-                                title = it.title,
-                                shortDescription = it.shortDescription,
-                                description = it.description,
-                                createdAt = Instant.DISTANT_PAST,
-                                updatedAt = Instant.DISTANT_PAST,
-                                imageUrl = it.imageUrl,
-                                articleLikes = it.articleLikes,
-                                articleDislikes = it.articleDislikes,
-                                commentsCount = it.commentsCount,
-                                commentsContent = it.commentsContent.toImmutableList(),
-                            )
-                        }
-                    )
+                    ResultState.Success(articles.map { it.toModel() })
                 } catch (e: Exception) {
                     ResultState.failure(AppError.UnknownAppError)
                 }
@@ -51,25 +36,27 @@ class ArticleRepositoryImpl @Inject constructor(
             emit(
                 try {
                     val article = sportsHubService.getArticle(id)
-                    ResultState.Success(
-                        ArticleModel(
-                            id = article.id,
-                            title = article.title,
-                            shortDescription = article.shortDescription,
-                            description = article.description,
-                            createdAt = Instant.DISTANT_PAST,
-                            updatedAt = Instant.DISTANT_PAST,
-                            imageUrl = article.imageUrl,
-                            articleLikes = article.articleLikes,
-                            articleDislikes = article.articleDislikes,
-                            commentsCount = article.commentsCount,
-                            commentsContent = article.commentsContent.toImmutableList(),
-                        )
-                    )
+                    ResultState.Success(article.toModel())
                 } catch (e: Exception) {
                     ResultState.failure(AppError.UnknownAppError)
                 }
             )
         }
+    }
+
+    private fun ArticleDto.toModel(): ArticleModel {
+        return ArticleModel(
+            id = id,
+            title = title,
+            shortDescription = shortDescription,
+            description = description,
+            createdAt = Instant.parse(createdAt),
+            updatedAt = Instant.parse(updatedAt),
+            imageUrl = imageUrl,
+            articleLikes = articleLikes,
+            articleDislikes = articleDislikes,
+            commentsCount = commentsCount,
+            commentsContent = commentsContent.toImmutableList(),
+        )
     }
 }
