@@ -35,11 +35,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
-import com.softserveinc.sportshub.R
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
+import com.softserveinc.sportshub.R
+import com.softserveinc.sportshub.domain.model.common.UiStateWrapper
+import com.softserveinc.sportshub.ui.theme.SportsHubTheme
 
 @Composable
 fun SignUpScreen(
@@ -228,5 +231,28 @@ fun SignUpScreen(
 
             Spacer(modifier = Modifier.height(16.dp))
         }
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+private fun SignUpScreenPreview() {
+    SportsHubTheme {
+        SignUpScreen(
+            uiState = SignUpViewModel.UiState(
+                firstName = "John",
+                lastName = "Doe",
+                email = "john@example.com",
+                password = "password",
+                signUpResult = UiStateWrapper(),
+            ),
+            onClose = {},
+            onFirstNameChange = {},
+            onLastNameChange = {},
+            onEmailChange = {},
+            onPasswordChange = {},
+            onSignUpClick = {},
+            onNavigateToLogin = {},
+        )
     }
 }

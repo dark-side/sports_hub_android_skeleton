@@ -1,3 +1,5 @@
+@file:Suppress("UnstableApiUsage")
+
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
@@ -9,6 +11,7 @@ plugins {
     alias(libs.plugins.hilt.android)
     alias(libs.plugins.baselineprofile)
     alias(libs.plugins.ktorfit)
+    alias(libs.plugins.screenshot)
 }
 
 kotlin {
@@ -21,6 +24,8 @@ android {
     namespace = "com.softserveinc.sportshub"
     compileSdk = 36
 
+    experimentalProperties["android.experimental.enableScreenshotTest"] = true
+
     defaultConfig {
         applicationId = "com.softserveinc.sportshub"
         minSdk = 26
@@ -32,7 +37,6 @@ android {
 
         buildConfigField("String", "API_URL", "\"http://10.0.2.2:3002/api/\"")
     }
-
     buildTypes {
         release {
             isMinifyEnabled = false
@@ -109,4 +113,11 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
+
+    screenshotTestImplementation(libs.screenshot.validation.api)
+    screenshotTestImplementation(libs.androidx.ui.tooling)
+}
+
+ktorfit {
+    compilerPluginVersion.set("2.3.3")
 }

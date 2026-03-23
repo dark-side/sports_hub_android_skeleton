@@ -35,16 +35,20 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.softserveinc.sportshub.R
 import androidx.core.net.toUri
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import coil3.compose.AsyncImage
+import com.softserveinc.sportshub.R
 import com.softserveinc.sportshub.domain.model.ArticleModel
-import kotlinx.datetime.Instant
+import com.softserveinc.sportshub.domain.model.common.UiStateWrapper
+import com.softserveinc.sportshub.ui.theme.SportsHubTheme
+import kotlinx.collections.immutable.persistentListOf
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
 import kotlin.time.ExperimentalTime
+import kotlin.time.Instant
 
 @Composable
 fun ArticleDetailScreen(
@@ -241,4 +245,34 @@ private fun formatPublishedDate(instant: Instant): String {
     val localDateTime = instant.toLocalDateTime(TimeZone.currentSystemDefault())
     val month = localDateTime.month.name.lowercase().replaceFirstChar { it.uppercase() }
     return "$month ${localDateTime.day}, ${localDateTime.year}"
+}
+
+@Preview(showBackground = true)
+@Composable
+private fun ArticleDetailScreenPreview() {
+    SportsHubTheme {
+        ArticleDetailScreen(
+            uiState = ArticleDetailViewModel.UiState(
+                article = UiStateWrapper(
+                    value = ArticleModel(
+                        id = 1,
+                        title = "Champions League Final Preview",
+                        shortDescription = "A look ahead to the biggest match in European football.",
+                        description = "The Champions League final is set to be an exciting clash between two of Europe's elite clubs. Both teams have shown incredible form throughout the tournament, and fans around the world are eagerly anticipating what promises to be a thrilling encounter.",
+                        createdAt = Instant.parse("2026-03-20T10:00:00Z"),
+                        updatedAt = Instant.parse("2026-03-20T12:00:00Z"),
+                        imageUrl = "",
+                        articleLikes = 42,
+                        articleDislikes = 3,
+                        commentsContent = persistentListOf(
+                            "Great article!",
+                            "Can't wait for the match!"
+                        ),
+                        commentsCount = 2,
+                    ),
+                ),
+            ),
+            onBack = {},
+        )
+    }
 }
